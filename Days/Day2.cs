@@ -8,8 +8,6 @@ public class Day2 : DayEngine
     private Submarine1 sub = new Submarine1();
     private Submarine2 sub2 = new Submarine2();
 
-    public override int Day => 2;
-
     public override string[] TestInput => new string[]
     {
         "forward 5",

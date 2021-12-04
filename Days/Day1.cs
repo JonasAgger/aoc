@@ -4,8 +4,6 @@ namespace AdventOfCode.Days;
 
 public class Day1 : DayEngine
 {
-    public override int Day => 1;
-
     public override string[] TestInput => new[]
     {
         "199",

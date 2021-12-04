@@ -4,7 +4,7 @@ public abstract class DayEngine
 {
     private readonly InputFetcher _inputFetcher = new InputFetcher();
 
-    public abstract int Day { get; }
+    public int Day => int.Parse(this.GetType().Name[3..]);
 
     public abstract string[] TestInput { get; }
 
