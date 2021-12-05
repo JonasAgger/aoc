@@ -72,7 +72,7 @@ public class BingoBoard
         for (int i = 0; i < bingoBoard.Length; i++)
         {
             columnsToCheck[i] = columnsToCheck[i] && bingoBoard[row][i].HasBeenCalled;
-            isWinningRow = isWinningRow & bingoBoard[row][i].HasBeenCalled;
+            isWinningRow = isWinningRow && bingoBoard[row][i].HasBeenCalled;
         }
 
         return isWinningRow;
