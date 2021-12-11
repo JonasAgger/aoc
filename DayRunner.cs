@@ -12,7 +12,7 @@ public class DayRunner
             .Assembly
             .GetTypes()
             .Where(x => x.IsAssignableTo(typeof(DayEngine)) && x.Name.StartsWith("Day") && x.IsAbstract == false && x != typeof(Day0))
-            .OrderBy(x => x.Name)
+            .OrderBy(x => int.Parse(x.Name[3..]))
             .ToArray();
 
         Console.WriteLine("Select Day:");
