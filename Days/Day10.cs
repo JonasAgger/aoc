@@ -45,7 +45,7 @@ public class Day10 : DayEngine
         End4,
     };
     
-    protected override Task<object> HandlePart1(string[] input)
+    protected override ValueTask<object> HandlePart1(string[] input)
     {
         var syntaxErrorScore = 0;
         
@@ -60,10 +60,10 @@ public class Day10 : DayEngine
             }
         }
         
-        return Task.FromResult<object>(syntaxErrorScore);
+        return ValueTask.FromResult<object>(syntaxErrorScore);
     }
 
-    protected override Task<object> HandlePart2(string[] input)
+    protected override ValueTask<object> HandlePart2(string[] input)
     {
         var syntaxCompleteScores = new List<long>();
         
@@ -88,7 +88,7 @@ public class Day10 : DayEngine
         }
 
         
-        return Task.FromResult<object>(syntaxCompleteScores.OrderBy(x => x).Skip(syntaxCompleteScores.Count/2).First());
+        return ValueTask.FromResult<object>(syntaxCompleteScores.OrderBy(x => x).Skip(syntaxCompleteScores.Count/2).First());
     }
 
     private char GetOpposite(char entry) => entry switch

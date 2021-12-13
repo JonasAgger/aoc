@@ -13,7 +13,7 @@ public class Day9 : DayEngine
         "9899965678",
     };
 
-    protected override Task<object> HandlePart1(string[] input)
+    protected override ValueTask<object> HandlePart1(string[] input)
     {
         var grid = Grid<int>.Create(input, x => int.Parse(x.ToString()));
 
@@ -21,10 +21,10 @@ public class Day9 : DayEngine
             .Select(point => grid[point.Y, point.X] + 1)
             .Sum();
         
-        return Task.FromResult<object>(summedLowValues);
+        return ValueTask.FromResult<object>(summedLowValues);
     }
 
-    protected override Task<object> HandlePart2(string[] input)
+    protected override ValueTask<object> HandlePart2(string[] input)
     {
         var grid = Grid<int>.Create(input, x => int.Parse(x.ToString()));
         
@@ -34,7 +34,7 @@ public class Day9 : DayEngine
             .Take(3)
             .Aggregate(1, (accu, curr) => accu * curr);
         
-        return Task.FromResult<object>(threeLargestBasinsMultiplied);
+        return ValueTask.FromResult<object>(threeLargestBasinsMultiplied);
     }
 
     private int FetchBasinSize(Grid<int> grid, Point origin)

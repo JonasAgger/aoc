@@ -8,12 +8,12 @@ public abstract class DayEngine
 
     public abstract string[] TestInput { get; }
 
-    protected abstract Task<object> HandlePart1(string[] input);
-    protected abstract Task<object> HandlePart2(string[] input);
+    protected abstract ValueTask<object> HandlePart1(string[] input);
+    protected abstract ValueTask<object> HandlePart2(string[] input);
 
     protected virtual string[] Transform(string str) => str.Split("\n", StringSplitOptions.RemoveEmptyEntries);
 
-    public async Task Run()
+    public async ValueTask Run()
     {
         var input = await _inputFetcher.FetchInput(Day);
 
@@ -26,7 +26,7 @@ public abstract class DayEngine
         PrintResult(2, result2);
     }
 
-    public async Task RunTests()
+    public async ValueTask RunTests()
     {
         var result1 = await HandlePart1(TestInput);
         var result2 = await HandlePart2(TestInput);

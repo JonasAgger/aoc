@@ -18,7 +18,7 @@ public class Day1 : DayEngine
         "263",
     };
 
-    protected override Task<object> HandlePart1(string[] input)
+    protected override ValueTask<object> HandlePart1(string[] input)
     {
         var ints = input.Select(int.Parse).ToArray();
 
@@ -29,10 +29,10 @@ public class Day1 : DayEngine
             if (ints[i-1] < ints[i]) sum++;
         }
 
-        return Task.FromResult<object>(sum);
+        return ValueTask.FromResult<object>(sum);
     }
 
-    protected override Task<object> HandlePart2(string[] input)
+    protected override ValueTask<object> HandlePart2(string[] input)
     {
         var ints = input.Select(int.Parse).ToArray();
 
@@ -54,6 +54,6 @@ public class Day1 : DayEngine
             if (windows[i - 1] < windows[i]) sum++;
         }
 
-        return Task.FromResult<object>(sum);
+        return ValueTask.FromResult<object>(sum);
     }
 }

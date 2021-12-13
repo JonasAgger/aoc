@@ -9,15 +9,15 @@ public class Day0 : DayEngine
         
     };
 
-    protected override Task<object> HandlePart1(string[] input)
+    protected override ValueTask<object> HandlePart1(string[] input)
     {
 
-        return Task.FromResult<object>(null);
+        return ValueTask.FromResult<object>(null);
     }
 
-    protected override Task<object> HandlePart2(string[] input)
+    protected override ValueTask<object> HandlePart2(string[] input)
     {
 
-        return Task.FromResult<object>(null);
+        return ValueTask.FromResult<object>(null);
     }
 }

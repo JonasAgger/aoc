@@ -9,7 +9,7 @@ public class Day7 : DayEngine
         "16,1,2,0,4,2,7,1,2,14"
     };
 
-    protected override Task<object> HandlePart1(string[] input)
+    protected override ValueTask<object> HandlePart1(string[] input)
     {
         var ints = input[0].Split(',').Select(int.Parse).OrderBy(x => x).ToArray();
 
@@ -37,10 +37,10 @@ public class Day7 : DayEngine
             }
         }
 
-        return Task.FromResult<object>(minValue);
+        return ValueTask.FromResult<object>(minValue);
     }
 
-    protected override Task<object> HandlePart2(string[] input)
+    protected override ValueTask<object> HandlePart2(string[] input)
     {
         var ints = input[0].Split(',').Select(int.Parse).OrderBy(x => x).ToArray();
 
@@ -69,6 +69,6 @@ public class Day7 : DayEngine
             }
         }
 
-        return Task.FromResult<object>(minValue);
+        return ValueTask.FromResult<object>(minValue);
     }
 }
