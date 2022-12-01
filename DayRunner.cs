@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using AdventOfCode.Days;
+using AdventOfCode._2021;
 using AdventOfCode.Library;
 
 namespace AdventOfCode;
@@ -8,15 +8,17 @@ public class DayRunner
 {
     public async Task Run()
     {
+        // only 2022
         var days = typeof(DayEngine)
             .Assembly
             .GetTypes()
-            .Where(x => x.IsAssignableTo(typeof(DayEngine)) && x.Name.StartsWith("Day") && x.IsAbstract == false && x != typeof(Day0))
+            .Where(x => x.IsAssignableTo(typeof(DayEngine)) && x.Name.StartsWith("Day") && x.IsAbstract == false && x.Name != nameof(Day0))
+            .Where(x => x.Namespace!.Contains("2022"))
             .OrderBy(x => int.Parse(x.Name[3..]))
             .ToArray();
 
-        Console.WriteLine("Select Day:");
 
+        Console.WriteLine("Select Day:");
         var index = 1;
         
         foreach (var day in days)

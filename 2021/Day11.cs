@@ -1,6 +1,6 @@
 ﻿using AdventOfCode.Library;
 
-namespace AdventOfCode.Days;
+namespace AdventOfCode._2021;
 
 public class Day11 : DayEngine
 {

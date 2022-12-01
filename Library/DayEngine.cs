@@ -2,8 +2,9 @@
 
 public abstract class DayEngine
 {
-    private readonly InputFetcher _inputFetcher = new InputFetcher();
+    private readonly InputFetcher inputFetcher = new InputFetcher();
 
+    public int Year => int.Parse(this.GetType().Namespace!.Split('.').Last().Replace("_", ""));
     public int Day => int.Parse(this.GetType().Name[3..]);
 
     public abstract string[] TestInput { get; }
@@ -15,7 +16,7 @@ public abstract class DayEngine
 
     public async ValueTask Run()
     {
-        var input = await _inputFetcher.FetchInput(Day);
+        var input = await inputFetcher.FetchInput(Year, Day);
 
         var transformedInput = Transform(input);
 
