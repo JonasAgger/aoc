@@ -6,4 +6,4 @@ Console.WriteLine("Starting!");
 
 var dayRunner = new DayRunner();
 
-await dayRunner.Run();
+await dayRunner.Run(2022);

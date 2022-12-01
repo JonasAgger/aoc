@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <Folder Include="Library\" />
-    <Folder Include="Sub\" />
   </ItemGroup>
 
 </Project>

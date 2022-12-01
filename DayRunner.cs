@@ -1,24 +1,21 @@
-﻿using System.Reflection;
-using AdventOfCode._2021;
+﻿using AdventOfCode.Days;
 using AdventOfCode.Library;
 
 namespace AdventOfCode;
 
 public class DayRunner
 {
-    public async Task Run()
+    public async ValueTask Run(string? year = null)
     {
-        // only 2022
         var days = typeof(DayEngine)
             .Assembly
             .GetTypes()
-            .Where(x => x.IsAssignableTo(typeof(DayEngine)) && x.Name.StartsWith("Day") && x.IsAbstract == false && x.Name != nameof(Day0))
-            .Where(x => x.Namespace!.Contains("2022"))
+            .Where(x => x.IsAssignableTo(typeof(DayEngine)) && x.Name.StartsWith("Day") && x.IsAbstract == false && x.Name != nameof(Day0) && (year == null ? !x.Namespace!.Contains("Old") : x.Namespace!.Contains(year)))
             .OrderBy(x => int.Parse(x.Name[3..]))
             .ToArray();
 
-
         Console.WriteLine("Select Day:");
+
         var index = 1;
         
         foreach (var day in days)
@@ -43,11 +40,39 @@ public class DayRunner
         
         if (isTest)
         {
-            await selectedDay.RunTests();
+            selectedDay.RunTests();
         }
         else
         {
-            await selectedDay.Run();
+            await selectedDay.Setup();
+            selectedDay.Run();
         }
+    }
+
+    public async ValueTask RunTimed(string? year = null, int? specificDay = null)
+    {
+        var days = typeof(DayEngine)
+            .Assembly
+            .GetTypes()
+            .Where(x => x.IsAssignableTo(typeof(DayEngine)) && x.Name.StartsWith("Day") && x.IsAbstract == false && x != typeof(Day0) && (year == null ? !x.Namespace!.Contains("Old") : x.Namespace!.Contains(year)))
+            .OrderBy(x => int.Parse(x.Name[3..]))
+            .Select(x => (DayEngine)Activator.CreateInstance(x)!)
+            .ToArray();
+
+        if (specificDay != null)
+        {
+            days = days.Where(x => x.Day == specificDay.Value).ToArray();
+        }
+        
+        var totalTime = 0d;
+
+        foreach (var day in days)
+            await day.Setup();
+        
+        foreach (var day in days)
+            totalTime += day.RunTimed();
+        
+        Console.WriteLine("---------------------------------------------");
+        Console.WriteLine($"Total Time: {Utils.GetTimeString(totalTime)}");
     }
 }
