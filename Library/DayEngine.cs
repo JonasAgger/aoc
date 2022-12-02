@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode.Library;
+﻿using System.Diagnostics;
+
+namespace AdventOfCode.Library;
 
 public abstract class DayEngine
 {
@@ -10,14 +12,14 @@ public abstract class DayEngine
     public abstract string[] TestInput { get; }
     private string[] input = Array.Empty<string>();
 
-    protected abstract ValueTask<object> HandlePart1(string[] input);
-    protected abstract ValueTask<object> HandlePart2(string[] input);
+    protected abstract object HandlePart1(string[] input);
+    protected abstract object HandlePart2(string[] input);
 
     protected virtual string[] Transform(string str) => str.Split("\n", StringSplitOptions.RemoveEmptyEntries);
 
-    public async ValueTask Setup() => input = Transform(await _inputFetcher.FetchInput(Year, Day));
+    public async ValueTask Setup() => input = Transform(await inputFetcher.FetchInput(Year, Day));
     
-    public async ValueTask Run()
+    public void Run()
     {
         var result1 = HandlePart1(input);
         PrintResult(1, result1);
@@ -26,16 +28,16 @@ public abstract class DayEngine
         PrintResult(2, result2);
     }
 
-    public async ValueTask RunTests()
+    public void RunTests()
     {
-        var result1 = await HandlePart1(TestInput);
+        var result1 = HandlePart1(TestInput);
         PrintResult(1, result1);
 
-        var result2 = await HandlePart2(TestInput);
+        var result2 = HandlePart2(TestInput);
         PrintResult(2, result2);
     }
 
-    public async ValueTask<double> RunTimed()
+    public double RunTimed()
     {
         const int Iterations = 100;
         const double DIterations = 100d;
@@ -46,14 +48,14 @@ public abstract class DayEngine
         
         for (int i = 0; i < 10; i++)
         {
-            var _ = await HandlePart1(input);
+            var _ = HandlePart1(input);
         }
         
         var start = Stopwatch.GetTimestamp();
         
         for (int i = 0; i < Iterations; i++)
         {
-            result1 = await HandlePart1(input);
+            result1 = HandlePart1(input);
         }
 
         var stop = Stopwatch.GetTimestamp();
@@ -63,14 +65,14 @@ public abstract class DayEngine
         
         for (int i = 0; i < 10; i++)
         {
-            var _ = await HandlePart2(input);
+            var _ = HandlePart2(input);
         }
         
         start = Stopwatch.GetTimestamp();
         
         for (int i = 0; i < Iterations; i++)
         {
-            result2 = await HandlePart2(input);
+            result2 = HandlePart2(input);
         }
 
         stop = Stopwatch.GetTimestamp();

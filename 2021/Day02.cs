@@ -18,7 +18,7 @@ public class Day2 : DayEngine
         "forward 2",
     };
 
-    protected override ValueTask<object> HandlePart1(string[] input)
+    protected override object HandlePart1(string[] input)
     {
         foreach (var (direction, magnitude) in input.Select(x => x.FromString()))
         {
@@ -26,10 +26,10 @@ public class Day2 : DayEngine
         }
 
 
-        return ValueTask.FromResult<object>(sub.HorizontalPosition * sub.Depth);
+        return sub.HorizontalPosition * sub.Depth;
     }
 
-    protected override ValueTask<object> HandlePart2(string[] input)
+    protected override object HandlePart2(string[] input)
     {
         foreach (var (direction, magnitude) in input.Select(x => x.FromString()))
         {
@@ -37,7 +37,7 @@ public class Day2 : DayEngine
         }
 
 
-        return ValueTask.FromResult<object>(sub2.HorizontalPosition * sub2.Depth);
+        return sub2.HorizontalPosition * sub2.Depth;
     }
 
     public class Submarine1

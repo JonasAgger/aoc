@@ -24,7 +24,7 @@ public class Day1 : DayEngine
     
     protected override string[] Transform(string str) => str.Split("\n");
 
-    protected override ValueTask<object> HandlePart1(string[] input)
+    protected override object HandlePart1(string[] input)
     {
         var elfs = new List<int>() {0};
 
@@ -37,10 +37,10 @@ public class Day1 : DayEngine
             }
         }
 
-        return new ValueTask<object>(elfs.Max());
+        return elfs.Max();
     }
 
-    protected override ValueTask<object> HandlePart2(string[] input)
+    protected override object HandlePart2(string[] input)
     {
         var elfs = new List<int>() {0};
 
@@ -53,7 +53,7 @@ public class Day1 : DayEngine
             }
         }
 
-        return new ValueTask<object>(elfs.OrderDescending().Take(3).Sum());
+        return elfs.OrderDescending().Take(3).Sum();
     }
 }
 

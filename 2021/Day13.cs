@@ -28,7 +28,7 @@ public class Day13 : DayEngine
         "fold along x=5",
     };
 
-    protected override ValueTask<object> HandlePart1(string[] input)
+    protected override object HandlePart1(string[] input)
     {
         var points = input.TakeWhile(x => !x.StartsWith("fold")).ToArray();
         var folds = input.SkipWhile(x => !x.StartsWith("fold"))
@@ -63,13 +63,13 @@ public class Day13 : DayEngine
 
         //Print(rawGrid);
 
-        return ValueTask.FromResult<object>(rawGrid.SelectMany(x => x).Count(x => !x));
+        return rawGrid.SelectMany(x => x).Count(x => !x);
     }
 
-    protected override ValueTask<object> HandlePart2(string[] input)
+    protected override object HandlePart2(string[] input)
     {
 
-        return ValueTask.FromResult<object>(null);
+        return null;
     }
 
     private bool[][] YFold(bool[][] grid, int foldIndex)

@@ -20,7 +20,7 @@ public class Day3 : DayEngine
         "01010",
     };
 
-    protected override ValueTask<object> HandlePart1(string[] input)
+    protected override object HandlePart1(string[] input)
     {
         var summedBits = input
             .Aggregate(new int[input[0].Length], (counts, s) => s.Select(x => int.Parse(x.ToString())).Select((bit, i) => counts[i] += bit).Select(_ => counts).Last())
@@ -29,15 +29,15 @@ public class Day3 : DayEngine
         var gammaRate = ToInt(summedBits.Select(x => x > input.Length / 2 ? (byte)1 : (byte)0).ToArray());
         var epsilonRate = ToInt(summedBits.Select(x => x < input.Length / 2 ? (byte)1 : (byte)0).ToArray());
 
-        return ValueTask.FromResult<object>(gammaRate * epsilonRate);
+        return gammaRate * epsilonRate;
     }
 
-    protected override ValueTask<object> HandlePart2(string[] input)
+    protected override object HandlePart2(string[] input)
     {
         var oxygenRating = ToInt(GetMostCommon(input));
         var scrubberRating = ToInt(GetLeastCommon(input));
 
-        return ValueTask.FromResult<object>(oxygenRating * scrubberRating);
+        return oxygenRating * scrubberRating;
     }
 
     private int ToInt(byte[] bits)

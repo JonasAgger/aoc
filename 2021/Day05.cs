@@ -18,7 +18,7 @@ public class Day5 : DayEngine
         "5,5 -> 8,2",
     };
 
-    protected override ValueTask<object> HandlePart1(string[] input)
+    protected override object HandlePart1(string[] input)
     {
         var lines = input.Select(x => new Line(x)).ToArray();
 
@@ -38,10 +38,10 @@ public class Day5 : DayEngine
 
         var overlappingPoints = board.SelectMany(x => x).Count(x => x > 1);
         
-        return ValueTask.FromResult<object>(overlappingPoints);
+        return overlappingPoints;
     }
 
-    protected override ValueTask<object> HandlePart2(string[] input)
+    protected override object HandlePart2(string[] input)
     {
         var lines = input.Select(x => new Line(x)).ToArray();
 
@@ -61,7 +61,7 @@ public class Day5 : DayEngine
 
         var overlappingPoints = board.SelectMany(x => x).Count(x => x > 1);
         
-        return ValueTask.FromResult<object>(overlappingPoints);
+        return overlappingPoints;
     }
 
     private class Line

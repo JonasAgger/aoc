@@ -9,7 +9,7 @@ public class Day6 : DayEngine
         "3,4,3,1,2"
     };
 
-    protected override ValueTask<object> HandlePart1(string[] input)
+    protected override object HandlePart1(string[] input)
     {
         const int days = 80;
 
@@ -34,10 +34,10 @@ public class Day6 : DayEngine
             }
         }
 
-        return ValueTask.FromResult<object>(fish.Count);
+        return fish.Count;
     }
 
-    protected override ValueTask<object> HandlePart2(string[] input)
+    protected override object HandlePart2(string[] input)
     {
         const int replicationDays = 7;
         const int matureDays = 2;
@@ -61,6 +61,6 @@ public class Day6 : DayEngine
             trailing[trailingIndex] = currentFish;
         }
 
-        return ValueTask.FromResult<object>(fishies.Sum() + trailing.Sum());
+        return fishies.Sum() + trailing.Sum();
     }
 }

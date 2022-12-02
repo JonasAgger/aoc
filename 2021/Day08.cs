@@ -20,7 +20,7 @@ public class Day8 : DayEngine
         "gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc | fgae cfgab fg bagce",
     };
 
-    protected override ValueTask<object> HandlePart1(string[] input)
+    protected override object HandlePart1(string[] input)
     {
         var cnt = 0;
         foreach (var str in input)
@@ -32,7 +32,7 @@ public class Day8 : DayEngine
 
             cnt += values.Count(x => identifiers.Contains(x));
         }
-        return ValueTask.FromResult<object>(cnt);
+        return cnt;
     }
     
     
@@ -46,7 +46,7 @@ public class Day8 : DayEngine
     };
 
     
-    protected override ValueTask<object> HandlePart2(string[] input)
+    protected override object HandlePart2(string[] input)
     {
         var sum = 0;
         
@@ -122,7 +122,7 @@ public class Day8 : DayEngine
             sum += intValue;
         }
         
-        return ValueTask.FromResult<object>(sum);
+        return sum;
     }
 
     private bool Intersect(ReadOnlySpan<char> target, ReadOnlySpan<char> comparator)

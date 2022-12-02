@@ -32,7 +32,7 @@ public class Day4 : DayEngine
 
     private List<BingoBoard> bingoBoards = new();
 
-    protected override ValueTask<object> HandlePart1(string[] input)
+    protected override object HandlePart1(string[] input)
     {
         bingoNumbers = input[0].Split(',', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
 
@@ -50,15 +50,15 @@ public class Day4 : DayEngine
                 {
                     var unCalledSum = bingoBoard.UnCalledNumbersSummed();
                     
-                    return ValueTask.FromResult<object>(unCalledSum * bingoNumber);
+                    return unCalledSum * bingoNumber;
                 }
             }
         }
         
-        return ValueTask.FromResult<object>(null);
+        return null;
     }
 
-    protected override ValueTask<object> HandlePart2(string[] input)
+    protected override object HandlePart2(string[] input)
     {
         bingoNumbers = input[0].Split(',', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
 
@@ -82,12 +82,12 @@ public class Day4 : DayEngine
                     {
                         var unCalledSum = bingoBoard.UnCalledNumbersSummed();
                     
-                        return ValueTask.FromResult<object>(unCalledSum * bingoNumber);
+                        return unCalledSum * bingoNumber;
                     }
                 }
             }
         }
         
-        return ValueTask.FromResult<object>(null);
+        return null;
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode;
+﻿using System.Net;
+
+namespace AdventOfCode;
 
 public class InputFetcher
 {

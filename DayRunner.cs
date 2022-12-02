@@ -1,16 +1,54 @@
-﻿using AdventOfCode.Days;
+﻿using System.Reflection;
 using AdventOfCode.Library;
 
 namespace AdventOfCode;
 
 public class DayRunner
 {
-    public async ValueTask Run(string? year = null)
+    public async Task GenerateMissing(int year, string baseLoc)
+    {
+        const string Template = @"using AdventOfCode.Library;
+
+    namespace AdventOfCode._$YEAR$;
+
+    public class Day$DAY$ : DayEngine
+    {
+        public override string[] TestInput => new string[]
+        {
+            """"
+        };
+
+        protected override object HandlePart1(string[] input)
+        {
+
+            return null;
+        }
+
+        protected override object HandlePart2(string[] input)
+        {
+
+            return null;
+        }
+    }";
+        
+        var yearPath = Path.Combine(baseLoc, year.ToString());
+
+        for (int day = 1; day <= 25; day++)
+        {
+            var file = Path.Combine(yearPath, $"Day{day:00}.cs");
+            if (!File.Exists(file))
+            {
+                await File.WriteAllTextAsync(file, Template.Replace("$DAY$", day.ToString()).Replace("$YEAR$", year.ToString()));
+            }
+        }  
+    }
+    
+    public async ValueTask Run(int? year = null)
     {
         var days = typeof(DayEngine)
             .Assembly
             .GetTypes()
-            .Where(x => x.IsAssignableTo(typeof(DayEngine)) && x.Name.StartsWith("Day") && x.IsAbstract == false && x.Name != nameof(Day0) && (year == null ? !x.Namespace!.Contains("Old") : x.Namespace!.Contains(year)))
+            .Where(x => x.IsAssignableTo(typeof(DayEngine)) && x.Name.StartsWith("Day") && x.IsAbstract == false && (year == null ? !x.Namespace!.Contains("Old") : x.Namespace!.Contains(year.ToString())))
             .OrderBy(x => int.Parse(x.Name[3..]))
             .ToArray();
 
@@ -54,7 +92,7 @@ public class DayRunner
         var days = typeof(DayEngine)
             .Assembly
             .GetTypes()
-            .Where(x => x.IsAssignableTo(typeof(DayEngine)) && x.Name.StartsWith("Day") && x.IsAbstract == false && x != typeof(Day0) && (year == null ? !x.Namespace!.Contains("Old") : x.Namespace!.Contains(year)))
+            .Where(x => x.IsAssignableTo(typeof(DayEngine)) && x.Name.StartsWith("Day") && x.IsAbstract == false && (year == null ? !x.Namespace!.Contains("Old") : x.Namespace!.Contains(year)))
             .OrderBy(x => int.Parse(x.Name[3..]))
             .Select(x => (DayEngine)Activator.CreateInstance(x)!)
             .ToArray();

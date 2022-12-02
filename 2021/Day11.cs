@@ -18,7 +18,7 @@ public class Day11 : DayEngine
         "5283751526",
     };
 
-    protected override ValueTask<object> HandlePart1(string[] input)
+    protected override object HandlePart1(string[] input)
     {
         const int Steps = 100;
         
@@ -75,10 +75,10 @@ public class Day11 : DayEngine
         }
         
         
-        return ValueTask.FromResult<object>(flashes);
+        return flashes;
     }
 
-    protected override ValueTask<object> HandlePart2(string[] input)
+    protected override object HandlePart2(string[] input)
     {
         var octopusses = Grid<OctoPus>.Create(input, y => new OctoPus(int.Parse(y.ToString())));
 
@@ -127,7 +127,7 @@ public class Day11 : DayEngine
                 }
             }
 
-            if (stepFlashes == 100) return ValueTask.FromResult<object>(step + 1);
+            if (stepFlashes == 100) return step + 1;
             if (step % 10000 == 0) Console.WriteLine(step);
         }
     }
