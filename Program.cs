@@ -1,10 +1,9 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using AdventOfCode;
+﻿using AdventOfCode;
 
 Console.WriteLine("Starting!");
 
 var dayRunner = new DayRunner();
 
-await dayRunner.GenerateMissing(2022, @"D:\aoc\");
+var projectDirectory = Directory.GetParent(Environment.CurrentDirectory)!.Parent!.Parent!.FullName;
+await dayRunner.GenerateMissing(2022, projectDirectory);
 await dayRunner.Run(2022);
