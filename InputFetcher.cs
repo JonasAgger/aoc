@@ -4,7 +4,7 @@ namespace AdventOfCode;
 
 public class InputFetcher
 {
-    private const string CookieFolder = "AdventOfCodeStorage";
+    private const string AoCFolder = "AdventOfCodeStorage";
     private const string CookieFile = "personal.cookie";
     private const string BaseAddress = "https://adventofcode.com";
     private static string cookie;
@@ -24,13 +24,30 @@ public class InputFetcher
 
         return await client.GetStringAsync(BaseAddress + path);
     }
+    
+    public async ValueTask<string> FetchTestInput(int year, int day)
+    {
+        await FetchCookie();
+        
+        var path = $"/{year}/day/{day}";
+
+        var cookieContainer = new CookieContainer();
+        cookieContainer.Add(new Cookie("session", cookie, path, "adventofcode.com"));
+
+        using var client = new HttpClient(new HttpClientHandler()
+        {
+            CookieContainer = cookieContainer
+        });
+
+        return await client.GetStringAsync(BaseAddress + path);
+    }
 
 
     private async ValueTask FetchCookie()
     {
         if (!string.IsNullOrEmpty(cookie)) return;
 
-        var cookieDirectory = Path.Combine(Path.GetTempPath(), CookieFolder);
+        var cookieDirectory = Path.Combine(Path.GetTempPath(), AoCFolder);
         var cookiePath = Path.Combine(cookieDirectory, CookieFile);
         
         if (!File.Exists(cookiePath))

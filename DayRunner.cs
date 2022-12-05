@@ -78,6 +78,25 @@ public class DayRunner
         
         if (isTest)
         {
+            if (selectedDay.TestInput.All(string.IsNullOrEmpty))
+            {
+                var fetcher = new InputFetcher();
+                var str = await fetcher.FetchTestInput(selectedDay.Year, selectedDay.Day);
+                var startBlock = "<pre><code>";
+                var start = str.AsSpan().IndexOf("<pre><code>") + startBlock.Length;
+                var end = str.AsSpan().IndexOf("</code></pre>");
+
+                var str2 = str.Substring(start, end - start).TrimEnd();
+
+                Console.WriteLine("Insert new TestInput:");
+                var template = @$"
+public override string[] TestInput => new string[]
+{{
+        {string.Join($"{Environment.NewLine}\t", str2.Split('\n', StringSplitOptions.RemoveEmptyEntries).Select(x => $"\"{x}\","))}
+}};";
+                Console.WriteLine(template);
+                return;
+            }
             selectedDay.RunTests();
         }
         else

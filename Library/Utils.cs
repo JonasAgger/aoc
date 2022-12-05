@@ -4,6 +4,18 @@ namespace AdventOfCode.Library;
 
 public static class Utils
 {
+    public static int Int(this string str) => int.Parse(str);
+
+    public static int IndexOf<T>(this T[] stuff, Func<T, bool> predicate)
+    {
+        for (int i = 0; i < stuff.Length; i++)
+        {
+            if (predicate(stuff[i])) return i;
+        }
+
+        return -1;
+    }
+    
     public static string GetTimeString(double elapsed)
     {
         var resolution = ToNanoSeconds(elapsed);
