@@ -106,14 +106,15 @@ public override string[] TestInput => new string[]
         }
     }
 
-    public async ValueTask RunTimed(string? year = null, int? specificDay = null)
+    public async ValueTask RunTimed(int? year = null, int? specificDay = null)
     {
         var days = typeof(DayEngine)
             .Assembly
             .GetTypes()
-            .Where(x => x.IsAssignableTo(typeof(DayEngine)) && x.Name.StartsWith("Day") && x.IsAbstract == false && (year == null ? !x.Namespace!.Contains("Old") : x.Namespace!.Contains(year)))
+            .Where(x => x.IsAssignableTo(typeof(DayEngine)) && x.Name.StartsWith("Day") && x.IsAbstract == false && (year == null ? !x.Namespace!.Contains("Old") : x.Namespace!.Contains(year.ToString())))
             .OrderBy(x => int.Parse(x.Name[3..]))
             .Select(x => (DayEngine)Activator.CreateInstance(x)!)
+            .Where(x => DateTime.Today >= new DateTime(x.Year, 12, x.Day))
             .ToArray();
 
         if (specificDay != null)
