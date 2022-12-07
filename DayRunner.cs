@@ -83,7 +83,7 @@ public class DayRunner
                 var fetcher = new InputFetcher();
                 var str = await fetcher.FetchTestInput(selectedDay.Year, selectedDay.Day);
                 var startBlock = "<pre><code>";
-                var start = str.AsSpan().IndexOf("<pre><code>") + startBlock.Length;
+                var start = str.AsSpan().IndexOf(startBlock) + startBlock.Length;
                 var end = str.AsSpan().IndexOf("</code></pre>");
 
                 var str2 = str.Substring(start, end - start).TrimEnd();
