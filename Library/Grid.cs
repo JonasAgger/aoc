@@ -41,4 +41,7 @@ public class Grid<T>
     private T? GetElementOrDefault(int x, int y) => IsYValueWithinBounds(y) && IsXValueWithinBounds(x) ? grid[y][x] : default;
     public T? this[int y, int x] => GetElementOrDefault(x, y);
     public T[][] GetRaw() => grid;
+
+    public T[] GetRow(int y) => grid[y];
+    public T[] GetColumn(int x) => grid.Select(row => row[x]).ToArray();
 }
