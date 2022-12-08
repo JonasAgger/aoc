@@ -27,9 +27,14 @@ public class Grid<T>
         return new Grid<T>(grid);
     }
 
-    private Grid(T[][] grid) => this.grid = grid;
+    private Grid(T[][] grid)
+    {
+        this.grid = grid;
+        this.columns = Enumerable.Range(0, grid.Length).Select(x => grid.Select(row => row[x]).ToArray()).ToArray();
+    }
 
     private readonly T[][] grid;
+    private readonly T[][] columns;
     private bool IsWithInBounds(int val, int len) => val >= 0 && val < len;
 
     public int Size => grid.Length;
@@ -43,5 +48,5 @@ public class Grid<T>
     public T[][] GetRaw() => grid;
 
     public T[] GetRow(int y) => grid[y];
-    public T[] GetColumn(int x) => grid.Select(row => row[x]).ToArray();
+    public T[] GetColumn(int x) => columns[x];
 }
