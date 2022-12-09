@@ -49,7 +49,7 @@ public class InputFetcher
 
         var cookieDirectory = Path.Combine(Path.GetTempPath(), AoCFolder);
         var cookiePath = Path.Combine(cookieDirectory, CookieFile);
-        
+        // File.Delete(cookiePath);
         if (!File.Exists(cookiePath))
         {
             Console.WriteLine("Could not find personal cookie or the previously entered cookie dident work.");
