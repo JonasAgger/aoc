@@ -27,6 +27,17 @@ public class Grid<T>
         return new Grid<T>(grid);
     }
 
+    public static Grid<T> Create(int rows, int columns)
+    {
+        T[][] grid = new T[columns][];
+        for (int i = 0; i < columns; i++)
+        {
+            grid[i] = new T[rows];
+        }
+
+        return new Grid<T>(grid);
+    }
+
     private Grid(T[][] grid)
     {
         this.grid = grid;
@@ -44,7 +55,12 @@ public class Grid<T>
     public bool IsXValueWithinBounds(int x) => IsWithInBounds(x, grid[0].Length);
     
     private T? GetElementOrDefault(int x, int y) => IsYValueWithinBounds(y) && IsXValueWithinBounds(x) ? grid[y][x] : default;
-    public T? this[int y, int x] => GetElementOrDefault(x, y);
+
+    public T? this[int y, int x]
+    {
+        get => GetElementOrDefault(x, y);
+        set => grid[y][x] = value;
+    }
     public T[][] GetRaw() => grid;
 
     public T[] GetRow(int y) => grid[y];
