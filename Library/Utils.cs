@@ -5,6 +5,7 @@ namespace AdventOfCode.Library;
 public static class Utils
 {
     public static int Int(this string str) => int.Parse(str);
+    public static long Long(this string str) => long.Parse(str);
 
     public static int IndexOf<T>(this T[] stuff, Func<T, bool> predicate)
     {
@@ -15,7 +16,21 @@ public static class Utils
 
         return -1;
     }
+
+    public static int Mod(int input, int mod)
+    {
+        var returnVal = input % mod;
+        return returnVal > 0 ? returnVal : input;
+    }
     
+    public static Queue<T> ToQueue<T>(this IEnumerable<T> e)
+    {
+        var q = new Queue<T>();
+        foreach(var element in e)
+            q.Enqueue(element);
+        return q;
+    }
+
     public static string GetTimeString(double elapsed)
     {
         var resolution = ToNanoSeconds(elapsed);
