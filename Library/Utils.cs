@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace AdventOfCode.Library;
 
@@ -22,6 +23,26 @@ public static class Utils
         var returnVal = input % mod;
         return returnVal > 0 ? returnVal : input;
     }
+
+    public static T GetOrAdd<T, K>(this Dictionary<K, T> dictionary, K key, Func<T> addFunc)
+    {
+        if (dictionary.TryGetValue(key, out var val)) return val;
+        val = addFunc();
+        dictionary[key] = val;
+        return val;
+    }
+
+    public static bool TryGet<T>(this List<T> lst, int index, [NotNullWhen(true)] out T? val)
+    {
+        if (lst.Count > index)
+        {
+            val = lst[index]!;
+            return true;
+        }
+
+        val = default;
+        return false;
+    }
     
     public static Queue<T> ToQueue<T>(this IEnumerable<T> e)
     {
@@ -29,6 +50,14 @@ public static class Utils
         foreach(var element in e)
             q.Enqueue(element);
         return q;
+    }
+
+    public static LinkedList<T> ToLinkedList<T>(this IEnumerable<T> e)
+    {
+        var ll = new LinkedList<T>();
+        foreach (var element in e)
+            ll.AddLast(element);
+        return ll;
     }
 
     public static string GetTimeString(double elapsed)
