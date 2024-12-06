@@ -56,6 +56,7 @@ public class Grid<T> where T : IEquatable<T>
     public bool IsPointWithinBounds(Point p) => IsYValueWithinBounds(p.Y) && IsXValueWithinBounds(p.X);
     
     private T? GetElementOrDefault(int x, int y) => IsYValueWithinBounds(y) && IsXValueWithinBounds(x) ? grid[y][x] : default;
+    private T? GetElementOrDefault(Point p) => GetElementOrDefault(p.X, p.Y);
 
     public Point IndexOf(T value)
     {

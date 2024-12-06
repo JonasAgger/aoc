@@ -31,6 +31,8 @@ public record struct Point(int X, int Y)
         return Math.Abs(a.X - X) + Math.Abs(a.Y - Y);
     }
 
+    public bool IsNatural() => X >= 0 && Y >= 0;
+
     public int Magnitude() => Math.Abs(X) + Math.Abs(Y);
     public Point Normalize() => new Point(Math.Clamp(Math.Abs(X), 0, 1) * Math.Sign(X), Math.Clamp(Math.Abs(Y), 0, 1) * Math.Sign(Y));
     

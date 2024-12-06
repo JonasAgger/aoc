@@ -10,7 +10,10 @@
 
   <ItemGroup>
     <Folder Include="2024\" />
-    <Folder Include="Library\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Disruptor" Version="6.0.0" />
   </ItemGroup>
 
 </Project>
