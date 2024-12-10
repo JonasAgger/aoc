@@ -47,6 +47,7 @@ using AdventOfCode.Library;
             while (grid.IsPointWithinBounds(currentPoint))
             {
                 var vectors = visited.GetOrAdd(currentPoint, () => []);
+                // Have we been here before facing the same way, if yes, we're looping.
                 if (vectors.Contains(movementVector))
                 {
                     return true;
@@ -55,7 +56,7 @@ using AdventOfCode.Library;
 
 
                 var next = currentPoint + movementVector;
-
+                // Turn while facing wall.
                 while (grid[next] == '#' || next == blocker)
                 {
                     movementVector = movementVector.TurnRight();
