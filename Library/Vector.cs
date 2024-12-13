@@ -2,6 +2,8 @@ namespace AdventOfCode.Library;
 
 public record Vector(int XMagnitude, int YMagnitude)
 {
+    public Vector Inverse() => new Vector(YMagnitude, XMagnitude);
+    public Vector Abs() => new Vector(Math.Abs(XMagnitude), Math.Abs(YMagnitude));
     public Vector TurnRight()
     {
         return new Vector(-YMagnitude, XMagnitude);
@@ -70,6 +72,18 @@ public record Vector(int XMagnitude, int YMagnitude)
         {
             vectors.Add(new Vector(1, 0));
         }
+        
+        return vectors;
+    }
+    
+    public static List<Vector> GenerateStraightDirectionalForGridUnchecked<T>(int length, Point p, Grid<T> grid) where T: IEquatable<T>
+    {
+        var vectors = new List<Vector>();
+        // Down, Up, Left, Right
+        vectors.Add(new Vector(0, -1));
+        vectors.Add(new Vector(0, 1));
+        vectors.Add(new Vector(-1, 0));
+        vectors.Add(new Vector(1, 0));
         
         return vectors;
     }
