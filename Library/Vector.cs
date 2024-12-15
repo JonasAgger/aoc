@@ -89,8 +89,10 @@ public record Vector(int XMagnitude, int YMagnitude)
     }
     
     public static Point operator +(Point a, Vector b) => new Point() { X = a.X + b.XMagnitude, Y = a.Y + b.YMagnitude };
+    public static Point operator *(Point a, Vector b) => new Point() { X = a.X * b.XMagnitude, Y = a.Y * b.YMagnitude };
     public static Point operator -(Point a, Vector b) => new Point() { X = a.X - b.XMagnitude, Y = a.Y - b.YMagnitude };
 
+    public static Vector operator *(Vector a, int b) => new Vector(a.XMagnitude * b, a.YMagnitude * b);
 
     public override string ToString()
     {

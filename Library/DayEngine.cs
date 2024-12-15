@@ -4,13 +4,14 @@ namespace AdventOfCode.Library;
 
 public abstract class DayEngine
 {
+    internal static bool isTest = false;
     private readonly InputFetcher inputFetcher = new InputFetcher();
 
     public int Year => int.Parse(this.GetType().Namespace!.Split('.').Last().Replace("_", ""));
     public int Day => int.Parse(this.GetType().Name[3..]);
 
     public abstract string[] TestInput { get; }
-    private string[] input = Array.Empty<string>();
+    private string[] input = [];
 
     protected abstract object HandlePart1(string[] input);
     protected abstract object HandlePart2(string[] input);
@@ -30,6 +31,7 @@ public abstract class DayEngine
 
     public void RunTests()
     {
+        isTest = true;
         var result1 = HandlePart1(TestInput);
         PrintResult(1, result1);
 
