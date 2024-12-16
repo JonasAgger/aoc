@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode.Library;
+﻿using System.Text;
+
+namespace AdventOfCode.Library;
 
 public class Grid<T> where T : IEquatable<T>
 {
@@ -102,4 +104,23 @@ public class Grid<T> where T : IEquatable<T>
 
     public T[] GetRow(int y) => grid[y];
     public T[] GetColumn(int x) => columns[x];
+
+    public void Print(Action<Point, T, StringBuilder>? innerPrinter = null)
+    {
+        innerPrinter ??= (_, t, builder) => builder.Append($"{t}");
+        var sb = new StringBuilder();
+        
+        for (int y = 0; y < Size; y++)
+        {
+            sb.Clear();
+            for (int x = 0; x < RowSize(y); x++)
+            {
+                var loc = new Point(x, y);
+                var val = this[loc]!;
+                innerPrinter(loc, val, sb);
+            }
+
+            Console.WriteLine(sb.ToString());
+        }
+    }
 }

@@ -43,7 +43,7 @@ public class DayRunner
         }  
     }
     
-    public async ValueTask Run(int? year = null)
+    public async ValueTask Run(int? year = null, bool current = false, bool testMode = false)
     {
         var days = typeof(DayEngine)
             .Assembly
@@ -55,22 +55,34 @@ public class DayRunner
         Console.WriteLine("Select Day:");
 
         var index = 1;
-        
-        foreach (var day in days)
+
+        if (current)
         {
-            Console.WriteLine($"{index++}: {day.Name}");
+            index = DateTime.Today.Day;
+        }
+        else
+        {
+            foreach (var day in days)
+            {
+                Console.WriteLine($"{index++}: {day.Name}");
+            }
+
+            index = int.Parse(Console.ReadLine() ?? "-1");
+
+            if (index > days.Length || index < 1)
+                return;
         }
 
-        index = int.Parse(Console.ReadLine() ?? "-1");
-
-        if (index > days.Length || index < 1)
-            return;
+        var isTest = testMode;
         
-        Console.WriteLine("Is Test? y/n");
+        if (!testMode)
+        {
+            Console.WriteLine("Is Test? y/n");
 
-        var isTest = Console.ReadKey().Key == ConsoleKey.Y;
+            isTest = Console.ReadKey().Key == ConsoleKey.Y;
 
-        Console.WriteLine();
+            Console.WriteLine();
+        }
         
         var selectedDay = (DayEngine)Activator.CreateInstance(days[index-1])!;
 

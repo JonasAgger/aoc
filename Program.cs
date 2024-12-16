@@ -6,7 +6,7 @@ var dayRunner = new DayRunner();
 
 var projectDirectory = GetProjectDir();
 await dayRunner.GenerateMissing(2024, projectDirectory);
-await dayRunner.Run(2024);
+await dayRunner.Run(2024, current: true);
 
 
 string GetProjectDir()
