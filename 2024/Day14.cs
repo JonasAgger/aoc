@@ -78,26 +78,26 @@ using AdventOfCode.Library;
 
             distances = distances.OrderBy(x => x.Item1).ToList();
 
-            // for (int i = 0; i < 10; i++)
-            // {
-            //     var time = distances[i].Item2;
-            //     var currPoints = input.Select(x => Project(x, time)).ToList();
-            //
-            //     var sb = new StringBuilder();
-            //     for (int y = 0; y < GridHeight; y++)
-            //     {
-            //         for (int x = 0; x < GridWidth; x++)
-            //         {
-            //             var sum = currPoints.Count(p => p == new Point(x, y));
-            //             if (sum == 0) sb.Append(".");
-            //             else sb.Append(sum);
-            //         }
-            //
-            //         sb.AppendLine();
-            //     }
-            //     
-            //     File.WriteAllText($"./{i}_{time}.txt", sb.ToString());
-            // }
+            for (int i = 0; i < 10; i++)
+            {
+                var time = distances[i].Item2;
+                var currPoints = input.Select(x => Project(x, time)).ToList();
+            
+                var sb = new StringBuilder();
+                for (int y = 0; y < GridHeight; y++)
+                {
+                    for (int x = 0; x < GridWidth; x++)
+                    {
+                        var sum = currPoints.Count(p => p == new Point(x, y));
+                        if (sum == 0) sb.Append(".");
+                        else sb.Append(sum);
+                    }
+            
+                    sb.AppendLine();
+                }
+                
+                File.WriteAllText($"./{i}_{time}.txt", sb.ToString());
+            }
             
             
             return distances[0].Item2;

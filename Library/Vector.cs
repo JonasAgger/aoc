@@ -1,6 +1,6 @@
 namespace AdventOfCode.Library;
 
-public record Vector(int XMagnitude, int YMagnitude)
+public record struct Vector(int XMagnitude, int YMagnitude)
 {
     public Vector Inverse() => new Vector(YMagnitude, XMagnitude);
     public Vector Abs() => new Vector(Math.Abs(XMagnitude), Math.Abs(YMagnitude));

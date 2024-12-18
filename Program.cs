@@ -2,11 +2,11 @@
 
 Console.WriteLine("Starting!");
 
-var dayRunner = new DayRunner();
+var dayRunner = new DayRunner(GetProjectDir());
 
-var projectDirectory = GetProjectDir();
-await dayRunner.GenerateMissing(2024, projectDirectory);
-await dayRunner.Run(2024, current: true);
+await dayRunner.GenerateMissing(DateTime.Today.Year);
+await dayRunner.RunTimed(2024, 18);
+// await dayRunner.Run(2024, current: true);
 
 
 string GetProjectDir()

@@ -1,11 +1,12 @@
 ﻿using System.Net;
+using AdventOfCode.Library;
 
 namespace AdventOfCode;
 
 public class InputFetcher
 {
-    private const string AoCFolder = "AdventOfCodeStorage";
-    private const string CookieFile = "personal.cookie";
+    private const string InputDirectory = "Input";
+    private const string CookieFile = "aoc.cookie";
     private const string BaseAddress = "https://adventofcode.com";
     private static string cookie;
     public async ValueTask<string> FetchInput(int year, int day)
@@ -47,9 +48,9 @@ public class InputFetcher
     {
         if (!string.IsNullOrEmpty(cookie)) return;
 
-        var cookieDirectory = Path.Combine(Path.GetTempPath(), AoCFolder);
+        var cookieDirectory = Path.Combine(DayRunner.BaseLocation, InputDirectory);
         var cookiePath = Path.Combine(cookieDirectory, CookieFile);
-        File.Delete(cookiePath);
+        
         if (!File.Exists(cookiePath))
         {
             Console.WriteLine("Could not find personal cookie or the previously entered cookie dident work.");

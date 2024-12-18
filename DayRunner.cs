@@ -5,7 +5,14 @@ namespace AdventOfCode;
 
 public class DayRunner
 {
-    public async Task GenerateMissing(int year, string baseLoc)
+    internal static string BaseLocation;
+
+    public DayRunner(string baseLocation)
+    {
+        BaseLocation = baseLocation;
+    }
+
+    public async Task GenerateMissing(int year)
     {
         const string Template = @"using AdventOfCode.Library;
 
@@ -31,7 +38,7 @@ public class DayRunner
         }
     }";
         
-        var yearPath = Path.Combine(baseLoc, year.ToString());
+        var yearPath = Path.Combine(BaseLocation, year.ToString());
 
         for (int day = 1; day <= 25; day++)
         {
