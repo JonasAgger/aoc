@@ -105,6 +105,17 @@ public class Grid<T> where T : IEquatable<T>
     public T[] GetRow(int y) => grid[y];
     public T[] GetColumn(int x) => columns[x];
 
+    public IEnumerable<(Point, T)> GetAll()
+    {
+        for (int y = 0; y < Size; y++)
+        {
+            for (int x = 0; x < grid[y].Length; x++)
+            {
+                yield return (new Point(x, y), grid[y][x]!);
+            }
+        }
+    }
+
     public void Print(Action<Point, T, StringBuilder>? innerPrinter = null)
     {
         innerPrinter ??= (_, t, builder) => builder.Append($"{t}");

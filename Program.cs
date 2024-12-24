@@ -5,8 +5,7 @@ Console.WriteLine("Starting!");
 var dayRunner = new DayRunner(GetProjectDir());
 
 await dayRunner.GenerateMissing(DateTime.Today.Year);
-await dayRunner.RunTimed(2024, 18);
-// await dayRunner.Run(2024, current: true);
+await dayRunner.Run(2024, current: false, testMode: false);
 
 
 string GetProjectDir()
