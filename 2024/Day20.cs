@@ -51,10 +51,10 @@ using AdventOfCode.Library;
             var start = grid.IndexOf(-2);
             var end = grid.IndexOf(-3);
             var path = new List<Point>() { start };
-            grid[end] = 0;
+            grid[end] = 0; // Fix for the dumb pathfinding below
 
             var current = start;
-            var index = 0;
+            var index = 0; // To track how many steps we are along.
             while (current != end)
             {
                 current = Vector
@@ -76,22 +76,23 @@ using AdventOfCode.Library;
     {
         public int Solve(int maxSkip, int saveAtLeast)
         {
-            var count = 0;
-            for (int i = 0; i < Path.Count - saveAtLeast; i++)
-            {
-                var current = Path[i];
-                var target = i + saveAtLeast;
-                foreach (var targetPoint in Path[target..])
+            return Path
+                .SkipLast(saveAtLeast) // We can skip the last 'n' given that even if we teleport to end it cant skip enough.
+                .Select(((current, i) =>
                 {
-                    var distance = targetPoint.ManhattanDistance(current);
-                    var valueDistance = Grid[targetPoint] - Grid[current] - distance;
-                    if (distance <= maxSkip && valueDistance >= saveAtLeast)
+                    // since we need to save at least 'n' and the Path is linear, with every move being equally expensive,
+                    // then saving at least 'n' just requires us to lookahead at least 'n'
+                    
+                    var target = i + saveAtLeast;
+                    return Path.Skip(target).Count(targetPoint =>
                     {
-                        count++;
-                    }
-                }
-            }
-
-            return count;
+                        // After that we just need to check that the value distance between us and the target is greater than 'n'
+                        // We need to factor in the manhattan distance as well, given that we also have to move to the given point.
+                        var distance = targetPoint.ManhattanDistance(current);
+                        var valueDistance = Grid[targetPoint] - Grid[current] - distance;
+                        return distance <= maxSkip && valueDistance >= saveAtLeast;
+                    });
+                }))
+                .Sum();
         }
     }

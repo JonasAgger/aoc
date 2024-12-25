@@ -26,7 +26,7 @@ using AdventOfCode.Library;
         protected override object HandlePart2(string[] input)
         {
             var startingNumbers = input.Select(x => x.Long()).ToList();
-            var cache = new Dictionary<CacheKey, CacheValue>();
+            var cache = new Dictionary<PriceWindowCacheKey, PriceCache>();
             foreach (var number in startingNumbers)
             {
                 SecretNumber2(number, cache);
@@ -41,70 +41,68 @@ using AdventOfCode.Library;
             var secretNumber = start;
             for (int i = 0; i < 2000; i++)
             {
-                var tmp = secretNumber * 64;
-                secretNumber = Prune(Mix(secretNumber, tmp));
-                tmp = secretNumber / 32;
-                secretNumber = Prune(Mix(secretNumber, tmp));
-                tmp = secretNumber * 2048;
-                secretNumber = Prune(Mix(secretNumber, tmp));
+                secretNumber = SecretNumberIteration(secretNumber);
             }
 
             return secretNumber;
         }
         
-        void SecretNumber2(long start, Dictionary<CacheKey, CacheValue> cache)
+        void SecretNumber2(long start, Dictionary<PriceWindowCacheKey, PriceCache> cache)
         {
             var secretNumber = start;
             var prevPrice = (sbyte)(secretNumber % 10);
-            var window = new CacheKey();
+            var window = new PriceWindowCacheKey();
             for (int i = 0; i < 2000; i++)
             {
-                var tmp = secretNumber * 64;
-                secretNumber = Prune(Mix(secretNumber, tmp));
-                tmp = secretNumber / 32;
-                secretNumber = Prune(Mix(secretNumber, tmp));
-                tmp = secretNumber * 2048;
-                secretNumber = Prune(Mix(secretNumber, tmp));
-
+                secretNumber = SecretNumberIteration(secretNumber);
                 var currentPrice = (sbyte)(secretNumber % 10);
-                if (i > 0)
+                window = window.Shift((sbyte)(currentPrice - prevPrice)); // Basically just a dummy class so that I don't have to bitshift a int.
+                
+                // If we have a full window, then add it to the cache
+                if (i > 2)
                 {
-                    window = window.Shift((sbyte)(currentPrice - prevPrice));
-
-                    if (i > 2)
-                    {
-                        var value = cache.GetOrAdd(window, () => new CacheValue());
-                        value.Push(start, currentPrice);
-                    }
+                    // Every pricecache keeps track of the starting number, and the current price for the given current sequence
+                    var value = cache.GetOrAdd(window, () => new PriceCache());
+                    value.Push(start, currentPrice);
                 }
 
                 prevPrice = currentPrice;
             }
         }
 
-        long Mix(long n1, long n2)
+        private static long SecretNumberIteration(long secretNumber)
+        {
+            var tmp = secretNumber * 64;
+            secretNumber = Prune(Mix(secretNumber, tmp));
+            tmp = secretNumber / 32;
+            secretNumber = Prune(Mix(secretNumber, tmp));
+            tmp = secretNumber * 2048;
+            return Prune(Mix(secretNumber, tmp));
+        }
+
+        private static long Mix(long n1, long n2)
         {
             return n1 ^ n2;
         }
 
-        long Prune(long n1)
+        private static long Prune(long n1)
         {
             return n1 % 16777216;
         }
 
-        readonly record struct CacheKey(sbyte B1, sbyte B2, sbyte B3, sbyte B4)
+        private readonly record struct PriceWindowCacheKey(sbyte B1, sbyte B2, sbyte B3, sbyte B4)
         {
-            public CacheKey Shift(sbyte b)
+            public PriceWindowCacheKey Shift(sbyte b)
             {
-                return new CacheKey(B2, B3, B4, b);
+                return new PriceWindowCacheKey(B2, B3, B4, b);
             }
         }
 
-        record CacheValue()
+        private record PriceCache()
         {
-            private readonly List<long> nodes = new();
-            private int value = 0;
-            public void Push(long start, int value)
+            private readonly List<long> nodes = [];
+            private int cumPrice = 0;
+            public void Push(long start, int price)
             {
                 if (nodes.Any(x => x == start))
                 {
@@ -112,9 +110,9 @@ using AdventOfCode.Library;
                 }
                 
                 nodes.Add(start);
-                this.value += value;
+                this.cumPrice += price;
             }
 
-            public int Value() => value;
+            public int Value() => cumPrice;
         }
     }
